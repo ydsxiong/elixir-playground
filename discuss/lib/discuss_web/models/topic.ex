@@ -4,6 +4,7 @@ defmodule DiscussWeb.Topic do
     # step 1 create a schema to let/help phoenix know what to expect from db
     schema "topics" do
         field :title, :string
+        belongs_to :user, DiscussWeb.User
     end
 
     # step 2 add some validation rule for phoenix to know what data to expect from UI
