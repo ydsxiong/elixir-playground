@@ -5,6 +5,7 @@ defmodule DiscussWeb.Topic do
     schema "topics" do
         field :title, :string
         belongs_to :user, DiscussWeb.User
+        has_many :comments, DiscussWeb.Comment
     end
 
     # step 2 add some validation rule for phoenix to know what data to expect from UI

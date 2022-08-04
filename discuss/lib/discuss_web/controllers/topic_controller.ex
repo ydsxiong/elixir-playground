@@ -9,19 +9,24 @@ defmodule DiscussWeb.TopicController do
 
 
    def index(conn, _params) do
-       IO.puts "++++++++++++++++++++++++"
-       IO.inspect conn.assigns
-       IO.puts "++++++++++++++++++++++++"
+       #IO.puts "++++++++++++++++++++++++"
+       #IO.inspect conn.assigns
+       #IO.puts "++++++++++++++++++++++++"
       topics = Repo.all(Topic)
       render conn, "index.html", topics: topics
    end
 
+   def show(conn, %{"id" => topic_id}) do
+      topic = Repo.get!(Topic, topic_id)
+      render conn, "show.html", topic: topic
+   end
+
     def new(conn, _params) do
-       IO.puts "++++++++++++++++++++++++"
-       IO.inspect conn
-       IO.puts "++++++++++++++++++++++++"
+       #IO.puts "++++++++++++++++++++++++"
+       #IO.inspect conn
+       #IO.puts "++++++++++++++++++++++++"
        #IO.inspect params
-       IO.puts "++++++++++++++++++++++++"
+       #IO.puts "++++++++++++++++++++++++"
 
         changeset = Topic.changeset(%Topic{})
 
