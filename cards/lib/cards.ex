@@ -24,11 +24,12 @@ defmodule Cards do
       [{"Ten", "Clubs"}, {"Nine", "Hearts"}, {"Two", "Hearts"}, ...]
   """
   def create_deck do
-    values = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"]
-    suits = ["Spades", "Clubs", "Hearts", "Diamonds"]
+    values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+    suits = ["\u2665", "\u2666", "\u2660", "\u2663"]
 
+    # use comprehensions as for loops
     for value <- values, suit <- suits do
-        {value, suit}
+        "#{value}#{suit}"
     end
 
   end
@@ -70,8 +71,8 @@ defmodule Cards do
   end
 
    def load(filename) do
-    binary = File.read!(filename)
-    :erlang.binary_to_term(binary)
+    File.read!(filename)
+    |> :erlang.binary_to_term
   end
 
    def load2(filename) do
@@ -88,7 +89,8 @@ defmodule Cards do
     end
   end
 
-   def deal_a_hand(hand_size) do 
+  # Enum.at(hand, 0), Enum.at(hand, 1), etc.
+   def deal_a_hand(hand_size \\ 5) do 
     create_deck() |> shuffle |> deal(hand_size)
    end
 end
