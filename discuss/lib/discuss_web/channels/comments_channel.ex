@@ -1,6 +1,6 @@
 defmodule DiscussWeb.CommentsChannel do
     use DiscussWeb, :channel
-    alias DiscussWeb.{Topic, Comment}
+    alias Discuss.{Topic, Comment}
 
     # this is called whenever js client join()
     # 1st arg - name is the channel name the client joined in with: comments:6

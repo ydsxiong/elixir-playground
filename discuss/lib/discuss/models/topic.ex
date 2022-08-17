@@ -1,11 +1,11 @@
-defmodule DiscussWeb.Topic do
+defmodule Discuss.Topic do
     use DiscussWeb, :model
     
     # step 1 create a schema to let/help phoenix know what to expect from db
     schema "topics" do
         field :title, :string
-        belongs_to :user, DiscussWeb.User
-        has_many :comments, DiscussWeb.Comment
+        belongs_to :user, Discuss.User
+        has_many :comments, Discuss.Comment
     end
 
     # step 2 add some validation rule for phoenix to know what data to expect from UI

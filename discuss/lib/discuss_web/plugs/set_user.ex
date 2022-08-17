@@ -3,7 +3,7 @@ defmodule DiscussWeb.Plugs.SetUser do
     import Phoenix.Controller # provide us get_session() 
 
     alias Discuss.Repo
-    alias DiscussWeb.User
+    alias Discuss.User
 
     def init(_params ) do
     end

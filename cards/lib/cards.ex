@@ -61,7 +61,7 @@ defmodule Cards do
       [{"Ten", "Clubs"}, {"Nine", "Hearts"}, {"Two", "Hearts"}]
 
   """
-  def deal(deck, hand_size) do
+  def deal(deck, hand_size \\ 5) do
     Enum.split(deck, hand_size)
   end
 
@@ -91,6 +91,23 @@ defmodule Cards do
 
   # Enum.at(hand, 0), Enum.at(hand, 1), etc.
    def deal_a_hand(hand_size \\ 5) do 
-    create_deck() |> shuffle |> deal(hand_size)
+    create_deck() 
+    |> shuffle 
+    |> shuffle 
+    |> shuffle 
+    |> deal(hand_size)
    end
+
+   def deal_hands(hand_size \\ 5) do 
+    {hand1, deck} = create_deck() 
+    |> shuffle 
+    |> shuffle 
+    |> shuffle 
+    |> deal(hand_size)
+
+    {hand2, deck}  = deal(deck, hand_size)
+
+    {hand1, hand2, deck}
+   end
+
 end

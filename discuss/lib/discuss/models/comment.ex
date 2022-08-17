@@ -1,4 +1,4 @@
-defmodule DiscussWeb.Comment do
+defmodule Discuss.Comment do
   use DiscussWeb, :model
 
   # if we are planning to send a list of comments fetched from DB to the remote client in browser,
@@ -8,8 +8,8 @@ defmodule DiscussWeb.Comment do
 
     schema "comments" do
         field :content, :string
-        belongs_to :user, DiscussWeb.User
-        belongs_to :topic, DiscussWeb.Topic
+        belongs_to :user, Discuss.User
+        belongs_to :topic, Discuss.Topic
         timestamps()
     end
 

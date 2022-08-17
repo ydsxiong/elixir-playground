@@ -1,4 +1,4 @@
-defmodule DiscussWeb.User do
+defmodule Discuss.User do
     use DiscussWeb, :model
     
     @derive {Jason.Encoder, only: [:email]}
@@ -7,8 +7,8 @@ defmodule DiscussWeb.User do
         field :email, :string
         field :provider, :string
         field :token, :string
-        has_many :topics, DiscussWeb.Topic
-        has_many :comments, DiscussWeb.Comment
+        has_many :topics, Discuss.Topic
+        has_many :comments, Discuss.Comment
         timestamps()
     end
 
