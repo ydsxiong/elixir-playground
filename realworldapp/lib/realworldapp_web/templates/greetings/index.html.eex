@@ -1,0 +1,15 @@
+<div class="phx-hero">
+ hello, <%= @randomvar %>
+
+ <p>
+and the random value from the render call is: <%= @var %>
+</p>
+<p>
+and another random value is: <%= @var2 %>
+</p>
+
+<p>
+ <a href='<%= greetings_path(@conn, :show, "Stephen Xiong") %>'>say hi</a>
+</p>
+</div>
+

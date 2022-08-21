@@ -1,0 +1,6 @@
+<div class="col-lg-6">
+<h5>Awsome Chat</h5>
+
+    <div id='messages'></div>
+    <input type='text' id='chat-input'></input>
+</div>
