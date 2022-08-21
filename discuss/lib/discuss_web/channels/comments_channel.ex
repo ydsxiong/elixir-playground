@@ -14,19 +14,22 @@ defmodule DiscussWeb.CommentsChannel do
     end
 
     def handle_in(name, %{"content" => content}, socket) do
-       #  IO.puts("++++++++++++++++")
-       # IO.puts(name)
-       # IO.inspect(message)
-       # IO.puts("++++++++++++++++")
         topic = socket.assigns.topic
         user_id = socket.assigns.user_id
 
         changeset = topic
-        |> build_assoc(:comments, user_id: user_id)
-        |> Comment.changeset(%{content: content})
+        |> build_assoc(:comments, user_id: user_id) # this creates/builds a new comment struct with associated user id and topic id without preloading them.
+        #|> IO.inspect
+        |> Comment.changeset(%{content: content}) # this merges the new struct with the new content to be saved.
+        #|> IO.inspect
 
         case Repo.insert(changeset) do
             {:ok, comment} -> 
+                comment = comment
+                #|> IO.inspect
+                |> Repo.preload(:user) # this preloads the user data into the chosen comment.
+                #|> IO.inspect
+                # this preloads is needed because it's explicitly specified in the comment model that user should be loaded for the Jason.Encoder!
                 broadcast!(socket, "comments:#{socket.assigns.topic.id}:new", %{comment: comment})
                 {:reply, :ok, socket}
             {:error, _reason} ->

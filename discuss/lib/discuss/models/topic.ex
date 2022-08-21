@@ -1,5 +1,5 @@
 defmodule Discuss.Topic do
-    use DiscussWeb, :model
+    use Discuss, :model
     
     # step 1 create a schema to let/help phoenix know what to expect from db
     schema "topics" do
@@ -18,7 +18,7 @@ defmodule Discuss.Topic do
     #action: nil,
     #changes: %{title: "Great Elixir"},
     #errors: [],
-    #data: #DiscussWeb.Topic<>,
+    #data: #Discuss.Topic<>,
     #valid?: true
     #>
     def changeset(struct, params \\ %{}) do

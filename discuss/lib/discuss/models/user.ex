@@ -1,5 +1,5 @@
 defmodule Discuss.User do
-    use DiscussWeb, :model
+    use Discuss, :model
     
     @derive {Jason.Encoder, only: [:email]}
 

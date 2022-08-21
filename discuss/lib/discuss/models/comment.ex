@@ -1,5 +1,5 @@
 defmodule Discuss.Comment do
-  use DiscussWeb, :model
+  use Discuss, :model
 
   # if we are planning to send a list of comments fetched from DB to the remote client in browser,
   # then this line is needed to tell the encode to only try to put content field into json data, ignoring all other phoenix related fields

@@ -1,46 +1,49 @@
 import {Socket} from "phoenix"
 
 let socket = new Socket("/socket", {params: {token: window.userToken}})
-
 socket.connect()
 
-const createChannel = (topicId) => {
+window.createChannel = (topicId) => {
    console.log("client joined in channnel for topic: " + topicId);
-      let channel = socket.channel(`comments:${topicId}`, {})
+   let channel = socket.channel(`comments:${topicId}`, {});
+   let btnAdd = document.querySelector('button');
+   let commentInput = document.querySelector('textarea');
+   let commentContainer = document.querySelector('.collection');
+   
+   // join the channel and notify the server:
+   channel.join().receive("ok", setupCommentsRenderOnJoiningChannel(commentContainer));
 
-      channel.join()
-         .receive("ok", resp => { 
-            console.log(resp);
-            renderComments(resp.comments);
-         })
-         .receive("error", resp => { console.log("Unable to join channel", resp) })
+   // listening on the broadcast from the server
+   channel.on(`comments:${topicId}:new`, setupCommentRender(commentContainer));
 
-         document.querySelector('button').addEventListener('click', function(){
-            const content = document.querySelector('textarea').value
-            channel.push('comment:add', { content: content});
-         });
-
-//   <button>Ping!</button>  
-// document.querySelector('button').addEventListener('click', function(){
-//   channel.push('comment:hello', { hi: "Stephen"});
-// });
-   channel.on(`comments:${topicId}:new`, renderComment);
+   // publish new comment to the server
+   btnAdd.addEventListener('click', setupCommentPublisher(channel, commentInput));
 }
 
-//export default socket
-
-window.createChannel = createChannel;
-
-function renderComments(comments) {
-   const renderedComments = comments.map(comment => renderCommmentCommon(comment));
-
-   document.querySelector('.collection').innerHTML = renderedComments.join('');
+function setupCommentsRenderOnJoiningChannel(commentContainer) { 
+   return (payload) => {
+         console.log(payload);
+         renderComments(payload.comments, commentContainer);
+   }
 }
 
-function renderComment(event) {
-   const renderedComment = renderCommmentCommon(event.comment);
+function setupCommentPublisher(channel, commentInput) {
+   return (_event) => {
+         channel.push('comment:add', { content: commentInput.value});
+         commentInput.value = '';
+   }
+}
 
-   document.querySelector('.collection').innerHTML += renderedComment;
+function setupCommentRender(commentContainer) {
+   return (payload) => {
+         let renderedComment = renderCommmentCommon(payload.comment);
+         commentContainer.innerHTML += renderedComment;
+   }
+}
+
+function renderComments(comments, commentContainer) {
+   let renderedComments = comments.map(comment => renderCommmentCommon(comment));
+   commentContainer.innerHTML = renderedComments.join('');
 }
 
 function renderCommmentCommon(comment) {
@@ -57,3 +60,10 @@ function renderCommmentCommon(comment) {
       </li> 
    `;
 }
+
+//export default socket
+
+//   <button>Ping!</button>  
+// document.querySelector('button').addEventListener('click', function(){
+//   channel.push('comment:hello', { hi: "Stephen"});
+// });
